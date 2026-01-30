@@ -17,27 +17,21 @@ const app = express(); // Must be declared before use
 app.use(cors());
 app.use(bodyParser.json());
 
-// --- Serve frontend files ---
-// Assuming frontend files are at project root (same level as backend)
-app.use(express.static(path.join(__dirname, ".."))); 
+// Serve frontend files (index.html, script.js, styles.css)
+app.use(express.static(__dirname)); 
+// __dirname points to backend folder, where all files are
 
-// For SPA: serve index.html for all unmatched routes
-// For SPA: serve index.html for all unmatched routes
-app.get(/^\/.*$/, (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "index.html"));
-});
-
-
-// --- MongoDB connection ---
-mongoose.connect(process.env.MONGO_URI)
+// MongoDB connection
+mongoose.connect(process.env.MONGO_URI) // Mongoose 7+ handles parser internally
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.error("MongoDB connection error:", err));
 
-// Use environment PORT (Render) or fallback
+// Use environment PORT (Render) or fallback to 5000
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 // --- ROUTES ---
+
 // Get all tasks
 app.get("/tasks", async (req, res) => {
   try {
@@ -48,7 +42,7 @@ app.get("/tasks", async (req, res) => {
   }
 });
 
-// Get single task
+// Get single task by ID
 app.get("/tasks/:id", async (req, res) => {
   try {
     const task = await Task.findById(req.params.id);
@@ -90,4 +84,9 @@ app.delete("/tasks/:id", async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
+});
+
+// Catch-all route to serve index.html for any frontend route
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
 });
