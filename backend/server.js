@@ -17,12 +17,17 @@ const app = express(); // Must be declared before use
 app.use(cors());
 app.use(bodyParser.json());
 
-// Serve frontend files (index.html, script.js, styles.css)
-app.use(express.static(path.join(__dirname, ".."))); 
-// Adjust path depending on your folder structure
+// --- Serve frontend ---
+// Assuming your frontend folder is "frontend" at the root of the project
+app.use(express.static(path.join(__dirname, "..", "frontend"))); 
 
-// MongoDB connection
-mongoose.connect(process.env.MONGO_URI) // no need for useNewUrlParser/useUnifiedTopology in Mongoose 7+
+// For SPA support: serve index.html for all unmatched routes
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "frontend", "index.html"));
+});
+
+// --- MongoDB connection ---
+mongoose.connect(process.env.MONGO_URI) // Mongoose 7+ doesn't need extra options
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.error("MongoDB connection error:", err));
 
