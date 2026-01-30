@@ -11,26 +11,23 @@ const path = require("path");
 
 const Task = require("./models/Task");
 
-const app = express(); // Must be declared before use
+const app = express();
 
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
 
 // Serve frontend files (index.html, script.js, styles.css)
-app.use(express.static(__dirname)); 
-// __dirname points to backend folder, where all files are
+// All files are in backend folder
+app.use(express.static(__dirname));
 
 // MongoDB connection
-mongoose.connect(process.env.MONGO_URI) // Mongoose 7+ handles parser internally
+mongoose
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
-  .catch(err => console.error("MongoDB connection error:", err));
+  .catch((err) => console.error("MongoDB connection error:", err));
 
-// Use environment PORT (Render) or fallback to 5000
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
-// --- ROUTES ---
+// Routes
 
 // Get all tasks
 app.get("/tasks", async (req, res) => {
@@ -42,7 +39,7 @@ app.get("/tasks", async (req, res) => {
   }
 });
 
-// Get single task by ID
+// Get single task
 app.get("/tasks/:id", async (req, res) => {
   try {
     const task = await Task.findById(req.params.id);
@@ -67,7 +64,9 @@ app.post("/tasks", async (req, res) => {
 // Update task
 app.put("/tasks/:id", async (req, res) => {
   try {
-    const task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const task = await Task.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
     if (!task) return res.status(404).json({ message: "Task not found" });
     res.json(task);
   } catch (err) {
@@ -86,7 +85,8 @@ app.delete("/tasks/:id", async (req, res) => {
   }
 });
 
-// Catch-all route to serve index.html for any frontend route
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+// Start server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
