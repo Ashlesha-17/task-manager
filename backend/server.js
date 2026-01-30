@@ -11,25 +11,22 @@ const path = require("path");
 
 const Task = require("./models/Task");
 
-const app = express(); // <-- must be declared first
+const app = express(); // Must be declared before use
 
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
 
-// Serve frontend files
+// Serve frontend files (index.html, script.js, styles.css)
 app.use(express.static(path.join(__dirname, ".."))); 
-// assuming index.html, script.js, styles.css are in the root folder above backend
+// Adjust path depending on your folder structure
 
 // MongoDB connection
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log("MongoDB connected"))
-.catch(err => console.error("MongoDB connection error:", err));
+mongoose.connect(process.env.MONGO_URI) // no need for useNewUrlParser/useUnifiedTopology in Mongoose 7+
+  .then(() => console.log("MongoDB connected"))
+  .catch(err => console.error("MongoDB connection error:", err));
 
-// Use environment PORT (Render) or fallback
+// Use environment PORT (Render) or fallback to 5000
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
