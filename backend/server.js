@@ -22,9 +22,11 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, ".."))); 
 
 // For SPA: serve index.html for all unmatched routes
-app.get("*", (req, res) => {
+// For SPA: serve index.html for all unmatched routes
+app.get(/^\/.*$/, (req, res) => {
   res.sendFile(path.join(__dirname, "..", "index.html"));
 });
+
 
 // --- MongoDB connection ---
 mongoose.connect(process.env.MONGO_URI)
