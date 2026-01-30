@@ -5,6 +5,9 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const Task = require("./models/Task");
 
+app.use(express.static(__dirname)); // serves index.html, script.js, styles.css
+
+
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
