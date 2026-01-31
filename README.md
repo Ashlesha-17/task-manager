@@ -24,4 +24,4 @@ https://task-manager-1-1p71.onrender.com/
 - Status
 
 ## 👩‍💻 Author
-Ashlesha
+Ashlesha Mandhare
