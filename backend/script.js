@@ -33,21 +33,25 @@ async function loadTasks() {
 
             const statusColor = task.status === "Done" ? "green" : "orange";
 
-            li.innerHTML = `
-                <span>
-                    <b>${task.title}</b> - ${task.description}
-                    <span style="color:${statusColor}; font-weight:bold;">
-                        [${task.status}]
-                    </span>
+        li.innerHTML = `
+            <span>
+                <b>${task.title}</b> - ${task.description}<br>
+                <small style="color: gray;">
+                    Created: ${new Date(task.createdAt).toLocaleString()}
+                </small>
+                <br>
+                <span style="color:${statusColor}; font-weight:bold;">
+                    [${task.status}]
                 </span>
-                <span>
-                    <button onclick="editTask('${task._id}')">Edit</button>
-                    <button onclick="deleteTask('${task._id}')">Delete</button>
-                    <button onclick="toggleStatus('${task._id}', '${task.status}')">
-                        Toggle
-                    </button>
-                </span>
-            `;
+            </span>
+            <span>
+                <button onclick="editTask('${task._id}')">Edit</button>
+                <button onclick="deleteTask('${task._id}')">Delete</button>
+                <button onclick="toggleStatus('${task._id}', '${task.status}')">
+                    Toggle
+                </button>
+            </span>
+        `;
 
             taskList.appendChild(li);
         });
