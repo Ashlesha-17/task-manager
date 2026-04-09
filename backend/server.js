@@ -53,6 +53,10 @@ app.get("/tasks/:id", async (req, res) => {
 // Add task
 app.post("/tasks", async (req, res) => {
   try {
+    if (!req.body.title) {
+      return res.status(400).json({ message: "Title is required" });
+    }
+
     const task = new Task(req.body);
     await task.save();
     res.json(task);
@@ -62,7 +66,7 @@ app.post("/tasks", async (req, res) => {
 });
 
 // Update task
-app.put("/tasks/:id", async (req, res) => {
+app.patch("/tasks/:id", async (req, res) => {
   try {
     const task = await Task.findByIdAndUpdate(req.params.id, req.body, {
       new: true,

@@ -7,12 +7,18 @@ const taskList = document.getElementById("taskList");
 // ---------------- LOAD TASKS ----------------
 async function loadTasks() {
     try {
-        taskList.innerHTML = "";
+        taskList.innerHTML = "Loading...";
 
         const res = await fetch(API);
         if (!res.ok) throw new Error("Fetch failed");
 
         const tasks = await res.json();
+
+        if (tasks.length === 0) {
+            taskList.innerHTML = "<p>No tasks yet</p>";
+            return;
+        }
+        taskList.innerHTML = "";
 
         tasks.forEach(task => {
             const li = document.createElement("li");
@@ -99,7 +105,7 @@ async function toggleStatus(id, currentStatus) {
 
     try {
         await fetch(`${API}/${id}`, {
-            method: "PUT",
+            method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ status: newStatus })
         });
@@ -118,7 +124,7 @@ async function editTask(id) {
 
     try {
         await fetch(`${API}/${id}`, {
-            method: "PUT",
+            method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 title: newTitle,
