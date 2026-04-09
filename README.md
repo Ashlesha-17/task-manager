@@ -1,27 +1,52 @@
-# Task Management Web Application
+# Task Manager Application
 
-A simple Full Stack Task Management Web Application built as part of the Global Trend Full Stack Development Internship Skill Assessment.
+## Overview
+This is a simple full-stack Task Manager application that allows users to create, view, update, and delete tasks. The project demonstrates basic frontend-backend integration, REST API design, and database usage.
 
-## 🚀 Live Demo
+## Features
+- Create new tasks
+- View all tasks
+- Update task status (Pending / Done)
+- Edit task details
+- Delete tasks
+- Display task creation timestamp
+- Loading and empty state handling
+
+## Tech Stack
+- Frontend: HTML, CSS, JavaScript
+- Backend: Node.js, Express.js
+- Database: MongoDB (Mongoose)
+
+## API Endpoints
+- GET /tasks → Fetch all tasks
+- POST /tasks → Create a task
+- PATCH /tasks/:id → Update a task
+- DELETE /tasks/:id → Delete a task
+
+## Deployment
+Live Application:
 https://task-manager-1-1p71.onrender.com/
 
-## 🛠 Tech Stack
-- Frontend: HTML, CSS, JavaScript
-- Backend: Node.js, Express
-- Database: MongoDB
-- Deployment: Render
+## Setup Instructions
 
-## ✨ Features
-- Create tasks
-- View all tasks
-- Update tasks
-- Delete tasks
-- Persistent data storage
+1. Clone the repository:
+   git clone https://github.com/Ashlesha-17/task-manager.git
 
-## 📋 Task Fields
-- Title
-- Description
-- Status
+2. Navigate to the project:
+   cd task-manager/backend
 
-## 👩‍💻 Author
-Ashlesha Mandhare
+3. Install dependencies:
+   npm install
+
+4. Create a .env file and add:
+   MONGO_URI=your_mongodb_connection_string
+
+5. Run the server:
+   npm start
+
+6. Open in browser:
+   http://localhost:5000
+
+## Notes
+- The application uses MongoDB for persistent storage.
+- The focus is on functionality, clean structure, and API integration rather than advanced UI design.
