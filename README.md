@@ -50,3 +50,8 @@ https://task-manager-1-1p71.onrender.com/
 ## Notes
 - The application uses MongoDB for persistent storage.
 - The focus is on functionality, clean structure, and API integration rather than advanced UI design.
+
+## Assumptions & Trade-offs
+- The application uses MongoDB for persistence instead of in-memory storage to demonstrate database integration.
+- The UI is kept simple to focus on functionality, API design, and clean structure as per the assignment scope.
+- Basic validation is implemented, while advanced features like authentication are intentionally excluded to maintain the required scope and timeline.
