@@ -48,7 +48,7 @@ async function loadTasks() {
                 <button onclick="editTask('${task._id}')">Edit</button>
                 <button onclick="deleteTask('${task._id}')">Delete</button>
                 <button onclick="toggleStatus('${task._id}', '${task.status}')">
-                    Toggle
+                    ${task.status === "Pending" ? "Mark Done" : "Mark Pending"}
                 </button>
             </span>
         `;
